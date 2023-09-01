@@ -3,38 +3,6 @@
 #include "include/cellules.h"
 #include "include/grille.h"
 
-void afficheSymbole(struct cellule foret) {
-    switch (foret.type) {
-        case 'S':
-            printf(" + ");
-            break;
-        case 'A':
-            printf(" * ");
-            break;
-        case 'F':
-            printf("   ");
-            break;
-        case 'R':
-            printf(" # ");
-            break;
-        case 'H':
-            printf(" x ");
-            break;
-        case 'E':
-            printf(" / ");
-            break;
-        case 'C':
-            printf(" - ");
-            break;
-        case 'Z':
-            printf(" @ ");
-            break;
-        default:
-            break;
-    }
-
-}
-
 struct grille recupDim() {
     int l = 0;
     int L = 0;
@@ -64,8 +32,9 @@ struct cellule** initTab(int l, int L) {
 void afficheForet(struct cellule** foret, int l, int L) {
     for (int i = 0; i < l; i++) {
         for (int j = 0; i < L; i++) {
-           // afficheSymbole(foret[i][j]);
+            afficheSymbole(foret[i][j]);
         }
+        
     }
     
 }

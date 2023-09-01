@@ -1,7 +1,10 @@
 #ifndef CELLULE_H
 #define CELLULE_H
 
-struct cellule {
+//Bibliothèques requise
+#include <stdio.h>
+
+typedef struct cellule {
     char type;
     int degre;
     int etat;
