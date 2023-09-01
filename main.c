@@ -31,12 +31,11 @@ struct cellule** initTab(int l, int L) {
 }
 void afficheForet(struct cellule** foret, int l, int L) {
     for (int i = 0; i < l; i++) {
-        for (int j = 0; i < L; i++) {
+        for (int j = 0; j < L; j++) {
             afficheSymbole(foret[i][j]);
-        }
-        
+        }  
+        printf("\n");
     }
-    
 }
 int main() {
     
