@@ -11,5 +11,6 @@ typedef struct cellule {
 } cellule;
 
 void afficheSymbole(struct cellule foret);
+struct cellule CreerType(int rep);
 
 #endif 
