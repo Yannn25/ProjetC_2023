@@ -30,5 +30,39 @@ void afficheSymbole(struct cellule foret) {
         default:
             break;
     }
+}
 
+struct cellule CreerType(int rep) {
+    struct cellule var= {'+', 0, 0};
+    switch (rep) {
+        case 1:
+            break;
+        case 2:
+            var.type = '*';
+            var.degre = 4; 
+            break;
+        case 3:
+            var.type = ' ', 
+            var.degre = 2; 
+            break;
+        case 4:
+            var.type = '#';
+            var.degre = 5;
+            break;
+        case 5:
+            var.type = 'x', 
+            var.degre = 3;
+            break;
+        case 6 :
+            var.type = '/'; 
+            break;
+        case 7:
+            var.type = '-'; 
+            var.degre = 1;
+            break;
+        case 8 :
+            var.type = '@'; 
+            break;
+    }
+    return var;
 }
