@@ -3,15 +3,16 @@
 #include <time.h>   // pour rand
 #include "include/cellules.h"
 #include "include/grille.h"
+#include "include/foret.h"
 
 struct grille recupDim() {
     int l = 0;
     int L = 0;
     printf("entrer les dimensions de a la foret :\n");
-    printf("entrer largeur :\n");
-    scanf("%d", &l);
-    printf("entrer largeur :\n");
+    printf("entrer la largeur :\n");
     scanf("%d", &L);
+    printf("entrer la longeur :\n");
+    scanf("%d", &l);
     printf("les dimensions de votre foret :%d %d\n", l,L);
     struct grille res = {l,L};
     return res;
@@ -33,7 +34,6 @@ struct cellule** initTabAlea(int l, int L) {
     for(int i=0; i < l; i++) {
         for(int j=0; j < L; j++) {
             nbgen = rand() % 8 + 1;   
-            printf("%d\n", nbgen);
             res[i][j] = CreerType(nbgen);
         }
     }
@@ -52,21 +52,31 @@ struct cellule** initTabMan(int l, int L) {
     }
     return res;
 }
-void afficheForet(struct cellule** foret, int l, int L) {
-    for (int i = 0; i < l; i++) {
-        for (int j = 0; j < L; j++) {
-            printf(" %c ", foret[i][j].type);
-        }  
-        printf("\n");
+
+int askIterations() {
+    printf("Combien de d'itérations souhaitez vous réaliser ?\n");
+    int ret = 0;
+    scanf("%d", &ret);
+    return ret;
+}
+void Tour(int lim, struct foret f) {
+    printf("\n");
+    while(lim > 0) {
+        afficheForet(f);
+        printf("\n Appuyer sur entrée pour continuer \n");
+        //vider le tampon
+        while (getchar() != '\n');
+        lim--;
     }
 }
 int main() {
     
     struct grille tab = recupDim();
     
-    struct cellule** foret =  initTabAlea(tab.l, tab.L);
-    afficheForet(foret, tab.l, tab.L);
-    
-      
+    struct cellule** ensembles =  initTabAlea(tab.l, tab.L);
+    struct foret foret = buildForet(tab, ensembles);
+    afficheForet(foret);
+    int nbIterarions = askIterations();
+    Tour(nbIterarions, foret);
     return 0;
 }
