@@ -1,8 +1,8 @@
 #include "include/cellules.h"
 
 
-void afficheSymbole(struct cellule foret) {
-    switch (foret.type) {
+void afficheSymbole(struct cellule cel) {
+    switch (cel.type) {
         case 'S':
             printf(" + ");
             break;
@@ -65,4 +65,18 @@ struct cellule CreerType(int rep) {
             break;
     }
     return var;
+}
+
+void toString(struct cellule cel) {
+    printf("Type -> %c Degre -> %d Etat -> %d", cel.type, cel.degre, cel.etat);
+}
+
+void setType(struct cellule *cel, char t) {
+    cel->type = t;
+}
+void setDegre(struct cellule *cel, int d) {
+    cel->degre = d;
+}
+void setEtat(struct cellule *cel, int e) {
+    cel->etat = e;
 }

@@ -72,7 +72,7 @@ int askIterations()
     return ret;
 }
 
-void Tour(int lim, struct foret f)
+void Simulation(int lim, struct foret f)
 {
     printf("\n");
     char rep;
@@ -80,7 +80,7 @@ void Tour(int lim, struct foret f)
     while (lim >= 0)
     {
         afficheForet(f);
-        printf("\n Appuyer sur c pour continuer ou taper f pour mettre une case en feu : \n");
+        printf("\n Appuyer sur (c) pour continuer, taper (f) pour mettre une case en feu, taper (m) pour modifier une case : \n");
         scanf(" %c", &rep);
         //printf("%c", rep);
         switch (rep) {
@@ -94,6 +94,18 @@ void Tour(int lim, struct foret f)
             printf("%d %d\n", a, b);
             lim += setFeuCellule(f, a, b);
             afficheEtatForet(f);
+            printf("\n");
+            break;
+        case 'm':
+            printf("Entrer les coordonnées de la case a modifier avec un espace : ");
+            if (scanf("%d %d", &a, &b) != 2)
+            {
+                printf("Invalid input for coordinates.");
+                return;
+            }
+            printf("%d %d\n", a, b);
+            lim += modifCellule(f, a, b);
+            printf("\n");
             break;
         case 'c':
             if(lim == 1)
@@ -117,6 +129,6 @@ int main()
     struct foret foret = buildForet(tab, ensembles);
     afficheForet(foret);
     int nbIterarions = askIterations();
-    Tour(nbIterarions, foret);
+    Simulation(nbIterarions, foret);
     return 0;
 }

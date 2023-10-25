@@ -10,7 +10,10 @@ typedef struct cellule {
     int etat;
 } cellule;
 
-void afficheSymbole(struct cellule foret);
+void afficheSymbole(struct cellule cel);
 struct cellule CreerType(int rep);
-
+void setType(struct cellule *cel, char t);
+void setDegre(struct cellule *cel, int d);
+void setEtat(struct cellule *cel, int e);
+void toString(struct cellule cel);
 #endif 
