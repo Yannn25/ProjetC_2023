@@ -77,23 +77,33 @@ void Tour(int lim, struct foret f)
     printf("\n");
     char rep;
     int a, b;
-    while (lim > 0)
+    while (lim >= 0)
     {
         afficheForet(f);
-        printf("\n Appuyer sur entrée ou taper f pour mettre une case en feu : \n");
+        printf("\n Appuyer sur c pour continuer ou taper f pour mettre une case en feu : \n");
         scanf(" %c", &rep);
-        printf("%c", rep);
-        if (rep == 'f')
-        {
+        //printf("%c", rep);
+        switch (rep) {
+        case 'f':
             printf("Entrer vos coordonnées avec un espace : ");
             if (scanf("%d %d", &a, &b) != 2)
             {
                 printf("Invalid input for coordinates.");
                 return;
             }
-            printf("%d %d", a, b);
+            printf("%d %d\n", a, b);
+            lim += setFeuCellule(f, a, b);
+            afficheEtatForet(f);
+            break;
+        case 'c':
+            if(lim == 1)
+                printf("Fin de la partie ! \n");
+            break;
+        default:
+            printf("Invalid input for coordinates.");
+            lim++;
+            break;
         }
-        while (getchar() != '\n');
         lim--;
     }
 }
