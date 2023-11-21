@@ -10,19 +10,19 @@ struct grille recupDim()
 {
     int l = 0;
     int L = 0;
-    printf("entrer les dimensions de a la foret :\n");
-    printf("entrer la largeur :\n");
+    printf("\nEntrer les dimensions de la foret ci-dessous\n\n");
+    printf("Entrer la largeur : ");
     scanf("%d", &L);
-    printf("entrer la longeur :\n");
+    printf("\nEntrer la longeur : ");
     scanf("%d", &l);
-    printf("les dimensions de votre foret :%d %d\n", l, L);
+    printf("\nLes dimensions de votre foret : %d %d\n\n", l, L);
     struct grille res = {l, L};
     return res;
 }
 int afficheType(int i, int j)
 {
     int r;
-    printf("\nQuel type de cellule voulez vous a la case [ %d, %d ]:\n", i, j);
+    printf("\nQuel type de cellule voulez vous a la case [ %d , %d ]:\n", i, j);
     printf("1.Sol\n2.Arbre\n3.Feuille\n4.Roche\n5.Herbre\n6.Eau\n7.Cendres\n8.Cendres Eteintes\n(Entrez le numéro)\n");
     scanf("%d", &r);
     return r;
@@ -66,7 +66,7 @@ struct cellule **initTabMan(int l, int L)
 
 int askIterations()
 {
-    printf("Combien de d'itérations souhaitez vous réaliser ?\n");
+    printf("\nCombien de d'itérations souhaitez vous réaliser ? ");
     int ret = 0;
     scanf("%d", &ret);
     return ret;
@@ -80,18 +80,16 @@ void Tour(int lim, struct foret f)
     while (lim > 0)
     {
         afficheForet(f);
-        printf("\n Appuyer sur entrée ou taper f pour mettre une case en feu : \n");
+        printf("\nAppuyer sur entrée ou taper f pour mettre une case en feu : ");
         scanf(" %c", &rep);
-        printf("%c", rep);
         if (rep == 'f')
         {
-            printf("Entrer vos coordonnées avec un espace : ");
+            printf("\nEntrer vos coordonnées avec un espace : ");
             if (scanf("%d %d", &a, &b) != 2)
             {
-                printf("Invalid input for coordinates.");
+                printf("\nInvalid input for coordinates.");
                 return;
             }
-            printf("%d %d", a, b);
         }
         while (getchar() != '\n');
         lim--;
