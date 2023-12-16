@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall
-SRC = main.c foret.c cellules.c
+SRC = main.c GestionJeu.c foret.c cellules.c grille.c
 TARGET = play
 
 all: $(TARGET)
