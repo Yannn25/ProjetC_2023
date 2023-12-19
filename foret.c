@@ -1,5 +1,11 @@
 #include "include/foret.h"
 
+//Liste des positions possibles pour nos voisins
+const int voisins[8][2] = {
+        {-1,-1},{-1,0},{-1,1},
+        {0,-1}, {0,1},
+        {1,-1},{1,0},{1,1}
+};
 
 struct foret * buildForet(struct grille tab, struct cellule** ens) {
     struct foret *f = (struct foret *)malloc(sizeof(struct foret));
@@ -14,16 +20,10 @@ struct foret * buildForet(struct grille tab, struct cellule** ens) {
 void afficheForet(const struct foret * f) {
     for (int i = 0; i < f->tab.l; i++) {
         for (int j = 0; j < f->tab.L; j++) {
-            printf(" %c ", f->ensemble[i][j].type);
-        }  
-        printf("\n");
-    }
-}
-
-void afficheEtatForet(const struct foret * f) {
-    for (int i = 0; i < f->tab.l; i++) {
-        for (int j = 0; j < f->tab.L; j++) {
-            printf(" %d ", f->ensemble[i][j].etat);
+            if(f->ensemble[i][j].etat == 1)
+                printf(BRED" ("BCYN"%c,"BRED" %d, %d) "RESET, f->ensemble[i][j].type, f->ensemble[i][j].degre, f->ensemble[i][j].etat);
+            else   
+                printf(GREEN" ("BLUE"%c,"RED" %d,"GREEN" %d"GREEN") "RESET, f->ensemble[i][j].type, f->ensemble[i][j].degre, f->ensemble[i][j].etat);
         }  
         printf("\n");
     }
@@ -35,7 +35,7 @@ int setFeuCellule(struct foret * f, int x, int y) {
         return 1;
     }
     f->ensemble[x][y].etat = 1;
-    return 0;
+    return -1;
 }
 
 int modifCellule(struct foret * f, int x, int y) {
@@ -68,11 +68,11 @@ int modifCellule(struct foret * f, int x, int y) {
             setEtat(&f->ensemble[x][y], a);
             break;
         default :
-            return 0;
+            return -1;
     }
     printf("Voici votre nouvelle cellule  : ");
     toString(f->ensemble[x][y]);
-    return 0;
+    return -1;
 }
 
 
@@ -98,12 +98,6 @@ void libererForet(struct foret* f) {
 }
 
 int verifVoisins(int i, int j, struct foret * f) {
-    //Liste des positions possibles pour nos voisins
-    int voisins[8][2] = {
-        {-1,-1},{-1,0},{-1,1},
-        {0,-1}, {0,1},
-        {1,-1},{1,0},{1,1}
-    };
     for(int z = 0; z < 8; ++z) {
         int vi = i + voisins[z][0];
         int vj = j + voisins[z][1];
@@ -118,30 +112,29 @@ int verifVoisins(int i, int j, struct foret * f) {
 
 struct foret * propagation(struct foret * f) {
     struct foret * copF = copieForet(f);
-    printf("-- Avant propagation --\nEtat de f(original) :\n");
-    afficheEtatForet(f);
-    printf("\nEtat de la copie :\n");
-    afficheEtatForet(copF);
     for(int i = 0; i < f->tab.l; i++) {
         for(int j = 0; j < f->tab.L; j++) {
-            if(f->ensemble[i][j].type == '/' || f->ensemble[i][j].type =='+')
+            if(f->ensemble[i][j].type == '/' || f->ensemble[i][j].type =='+' || f->ensemble[i][j].degre == 0)
                 continue;
-            if(f->ensemble[i][j].degre > 2 && f->ensemble[i][j].etat == 1)
-                copF->ensemble[i][j].degre -= 1;
-            if(f->ensemble[i][j].degre == 2 && f->ensemble[i][j].etat == 1)
-                copF->ensemble[i][j].type = '-';
-            if(f->ensemble[i][j].type == '-')
-                copF->ensemble[i][j].type = '@';
             if(estTypeSpe(f->ensemble[i][j].type) && verifVoisins(i,j,f)){
                 copF->ensemble[i][j].degre -= 1;
                 copF->ensemble[i][j].etat = 1;
             }
+            if(f->ensemble[i][j].degre == 2 && f->ensemble[i][j].etat == 1)
+                copF->ensemble[i][j].type = '-';
+            if(f->ensemble[i][j].type == '-')
+                copF->ensemble[i][j].type = '@';
+            if(f->ensemble[i][j].degre > 2 && f->ensemble[i][j].etat == 1)
+                copF->ensemble[i][j].degre -= 1;
         }  
     }
-    printf("-- Apres propagation --\nEtat de f(original) :\n");
-    afficheEtatForet(f);
-    printf("\nEtat de la copie :\n");
-    afficheEtatForet(copF);
-    libererForet(f);//si besoin de revenir en arriere peut etre intéresant de garder ca !
+    libererForet(f);
     return copF;
+}
+
+int * verifPropagation(struct foret * f, int Ax, int Bx, int Ay, int By) {
+    int * tabret = (int *) malloc(2 * sizeof(int));
+    tabret[0] = 0;
+    tabret[1] = 0;
+    return tabret;
 }
