@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "foret.h"
 #include "cell.h"
-#include "foret.h"
+
 
 typedef struct ListForet {
     struct Cell * head;

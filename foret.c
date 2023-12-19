@@ -1,7 +1,7 @@
 #include "include/foret.h"
 
 //Liste des positions possibles pour nos voisins
-const int voisins[8][2] = {
+int voisins[8][2]  = {
         {-1,-1},{-1,0},{-1,1},
         {0,-1}, {0,1},
         {1,-1},{1,0},{1,1}

@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "include/GestionJeu.h"
-#include "include/color_terminal.h"
-#include "include/cellules.h"
-#include "include/grille.h"
-#include "include/foret.h"
-#include "include/ListForet.h"
 
 int askIterations() {
     printf("Combien d'itérations souhaitez vous réaliser ?\n");
@@ -24,7 +16,7 @@ void Simulation(int lim, struct foret * f) {
     while (lim > 0) {
         printf("\nItération %d\n", iter++);
         afficheForet(f);
-        printf("\n Entré (c) pour continuer (q) pour quitter\nTaper (f) pour mettre une case en feu \n(m) pour modifier une case \n(r) pour revenir en arrière\n(v) pour vérifié la possibilité d'une propagation \n");
+        printf("\nEntré (c) pour continuer (q) pour quitter\nTaper (f) pour mettre une case en feu \n(m) pour modifier une case \n(r) pour revenir en arrière\n(v) pour vérifié la possibilité d'une propagation \n");
         scanf(" %c", &rep);
         switch (rep) {
             case 'f':
@@ -88,9 +80,10 @@ void Simulation(int lim, struct foret * f) {
                     iter--;
                     continue;
                 }
-                int * rep = verifPropagation(f, a, b, c, d);
-                if(rep[0])
-                    printf("Le chemin menant de A à B est de %d et nécessites %d étapes de propagation\n", rep[0], rep[1]);
+                struct ArbreForet * arbre = ForetToArbre(f,a,b);
+                int rep = nbTourPropa(a,c,d);
+                if(rep != 0)
+                    printf("Le chemin menant de A à B est de %d et nécessites %d étapes de propagation\n", longeurChemin(a,c,d), rep[1]);
                 else 
                     printf("La propagation de A à B n'est pas possible\n");
                 break;
